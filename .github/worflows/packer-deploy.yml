@@ -19,7 +19,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::151926427169:role/github-actions-iodc
           aws-region: eu-west-1
-          role-session-name: GithubVPCDeploy
+          role-session-name: GithubPackerDeploy
       
       - name: Packer Set up
         uses: hashicorp/setup-packer@v1
