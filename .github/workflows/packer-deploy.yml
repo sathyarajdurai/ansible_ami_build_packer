@@ -1,8 +1,7 @@
 name: packer ami build deployment in AWS
 on: 
   push:
-    branches:
-      main
+    
 jobs:
   packer-deploy:
     runs-on:  ubuntu-latest
@@ -23,7 +22,7 @@ jobs:
           role-session-name: GithubPackerDeploy
       
       - name: Packer Set up
-        uses: hashicorp/packer-github-actions@main
+        uses: hashicorp/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
