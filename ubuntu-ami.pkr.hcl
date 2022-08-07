@@ -22,18 +22,18 @@ variable "grdeploy" {
   default = "green"
 }
 
-locals {
-  timestamp = regex_replace(timestamp(), "[- TZ:]", "")
-}
+// locals {
+//   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
+// }
 
 
 source "amazon-ebs" "Blue" {
-  ami_name      = "${var.ami_prefix}-Blue-${local.timestamp}"
+  ami_name      = "${var.ami_prefix}-Blue"
   instance_type = "t3.small"
   region        = "eu-west-1"
-  vpc_id        = "vpc-08116affe7705c0e5"
-  subnet_id     = "subnet-0f7f747af8de118ac"
-  security_group_id = "sg-06f7049bbea8acb3c"
+  vpc_id        = "vpc-0eeacc2d66b989dc1"
+  subnet_id     = "subnet-068ab3fcbdaa5269b"
+  security_group_id = "sg-00dec1102341a59c8"
  
 
   source_ami_filter {
@@ -49,7 +49,9 @@ source "amazon-ebs" "Blue" {
     tags = {
       "Name" = "Blue-Server"
     }
-  
+  deprecate_at = timeadd(timestamp(), "8766h")
+  force_deregister  = "true"
+  force_delete_snapshot = "true"
 }
 
 build {
@@ -65,12 +67,12 @@ build {
 }
 
 source "amazon-ebs" "Green" {
-  ami_name      = "${var.ami_prefix}-Green-${local.timestamp}"
+  ami_name      = "${var.ami_prefix}-Green"
   instance_type = "t3.small"
   region        = "eu-west-1"
-  vpc_id        = "vpc-08116affe7705c0e5"
-  subnet_id     = "subnet-0f7f747af8de118ac"
-  security_group_id = "sg-06f7049bbea8acb3c"
+  vpc_id        = "vpc-0eeacc2d66b989dc1"
+  subnet_id     = "subnet-068ab3fcbdaa5269b"
+  security_group_id = "sg-00dec1102341a59c8"
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
@@ -85,6 +87,8 @@ source "amazon-ebs" "Green" {
     "Name" = "Green-Server"
   }
   deprecate_at = timeadd(timestamp(), "8766h")
+  force_deregister  = "true"
+  force_delete_snapshot = "true"
 }
 
 build {
