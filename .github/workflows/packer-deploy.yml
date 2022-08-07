@@ -23,6 +23,10 @@ jobs:
       
       - name: Packer Set up
         uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: .pkr.hcl
 
       - name:  Packer initialization
         run:  packer init .
