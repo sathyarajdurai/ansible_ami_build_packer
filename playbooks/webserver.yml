@@ -1,0 +1,42 @@
+---
+  - hosts: default
+    become: true
+    vars:
+      server_color: "{{ color }}"
+    tasks:
+      - name: update the apt-get
+        apt:
+          update_cache: yes
+      
+      - name: Install apache2
+        apt:
+          name: "apache2"
+          state: present
+
+      - name: Create a directory if it does not exist
+        file:
+          path: "/var/www/{{ color }}"
+          state: directory
+
+      - name: Copy my index page
+        template:
+          src: "index.html.j2"
+          dest: "/var/www/{{ color }}/index.html"
+
+      - name: Copy configuration file for apache
+        copy:
+          src: "{{ color }}.conf"
+          dest: "/etc/apache2/sites-available/{{ color }}.conf"
+
+      - name: Enable site for {{ color }}.conf
+        command:
+          a2ensite {{ color }}.conf
+
+      - name:
+        command:
+          a2dissite 000-default.conf
+
+      - name: Restart apache2 server
+        service:
+          name: apache2
+          state: restarted
