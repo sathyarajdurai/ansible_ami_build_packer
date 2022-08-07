@@ -22,7 +22,7 @@ jobs:
           role-session-name: GithubPackerDeploy
       
       - name: Packer Set up
-        uses: hashicorp/setup-packer@v1
+        uses: hashicorp/packer-github-actions@main
 
       - name:  Packer initialization
         run:  packer init .
