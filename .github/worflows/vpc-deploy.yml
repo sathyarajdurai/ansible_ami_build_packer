@@ -1,0 +1,34 @@
+name: packer ami build deployment in AWS
+on: 
+  push:
+    branches:
+      main
+jobs:
+  packer-deploy:
+    runs-on:  ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Clone our repository
+        uses: actions/checkout@v3
+      
+      - name: AWS Authentication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::151926427169:role/github-actions-iodc
+          aws-region: eu-west-1
+          role-session-name: GithubVPCDeploy
+      
+      - name: Packer Set up
+        uses: hashicorp/setup-packer@v1
+
+      - name:  Packer initialization
+        run:  packer init .
+
+      - name: Packer planning
+        run:  packer validate .
+
+      - name: Packer applying
+        run:  packer build .
