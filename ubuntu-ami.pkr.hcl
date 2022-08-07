@@ -33,7 +33,7 @@ source "amazon-ebs" "Blue" {
   region        = "eu-west-1"
   vpc_id        = "vpc-0eeacc2d66b989dc1"
   subnet_id     = "subnet-068ab3fcbdaa5269b"
-  security_group_id = "sg-00dec1102341a59c8"
+  security_group_id = "sg-04c950d4b41c1cda2"
  
 
   source_ami_filter {
@@ -72,7 +72,7 @@ source "amazon-ebs" "Green" {
   region        = "eu-west-1"
   vpc_id        = "vpc-0eeacc2d66b989dc1"
   subnet_id     = "subnet-068ab3fcbdaa5269b"
-  security_group_id = "sg-00dec1102341a59c8"
+  security_group_id = "sg-04c950d4b41c1cda2"
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
