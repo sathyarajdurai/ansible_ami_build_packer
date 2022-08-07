@@ -12,7 +12,7 @@ jobs:
       id-token: write
     steps:
       - name: Clone our repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       
       - name: AWS Authentication
         uses: aws-actions/configure-aws-credentials@v1
